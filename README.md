@@ -12,8 +12,17 @@ This project attempts to draw images on *txt* files also known as ASCII art.
 ---
 ## How to use?
 1. put your images inside inputs directory
+   Example:
+   ![inputs](./readme_img/input_example.png)
+   ![input_img](./readme_img/naruto.jpg)
 2. run main.py
+   ```bash
+   python main.py
+   ```
 3. open outputs directory to see your images to texts
+   ![outputs](./readme_img/output_example.png)
+   ![output_img](./readme_img/output_naruto.png)
+
 
 >**NOTE:** you might need to play with **TEXT_WIDTH** and **CANNY_CONSTANT** variables inside main.py if you don't get your desired output.
 
