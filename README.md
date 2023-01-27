@@ -4,7 +4,7 @@ This project attempts to draw images on *txt* files also known as ASCII art.
 ---
 
 ## Requirements
-1. python3
+1. [python3](https://www.python.org/downloads/)
 2. cv2
    ```bash
    pip install opencv-python
