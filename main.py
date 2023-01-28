@@ -2,13 +2,10 @@ import cv2
 import os
 import tkinter as tk
 
-from edit import Editor
-from DrawingApp import DrawingApp
+
 from GUI import GUI
 
-# you might wanna play with this const
-TEXT_WIDTH = 100
-CANNY_CONSTANT = 150
+
 
 setting = {
     "navBg": "#717171",
@@ -20,13 +17,7 @@ setting = {
 
 def main():
 
-    root = tk.Tk()
-    root.config(background=setting["bg"])
-    root.geometry("760x400")
-    root.minsize(760, 400)
-    print(editingWindow)
     app = GUI(editingWindow)
-    root.mainloop()
 
 
     # name, typ = image.split(".")
@@ -47,16 +38,15 @@ def main():
     
 
 
-def editingWindow():
+def editingWindow(img):
     
+    
+    # editor = DrawingApp(600, 500)
+    # self.image = editor.draw()
+
     cv2.namedWindow("frame")
     cv2.createTrackbar("threshold1", "frame", 1, 500, lambda a: 0)
     cv2.createTrackbar("threshold2", "frame", 1, 500, lambda a: 0)
-
-
-
-    editor = DrawingApp(600, 500)
-    img = editor.draw()
 
 
     while True:
@@ -70,11 +60,11 @@ def editingWindow():
         if (key==27):
             break
 
-    cv2.destroyAllWindows()
+    cv2.destroyWindow("frame")
 
     # editing image
-    editor = Editor(img, "outputs\\" + "test" + ".txt", TEXT_WIDTH, threshold1, threshold2)
-    editor.makeOutput()
+    # editor = Editor(img, "outputs\\" + "test" + ".txt", TEXT_WIDTH, threshold1, threshold2)
+    # editor.makeOutput()
 
 
 

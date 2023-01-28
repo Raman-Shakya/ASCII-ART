@@ -1,7 +1,8 @@
 __pycache__
-tempCodeRunnerFile.py
+
+# temp*
 
 *.exe
 *.class
-*.txt
+# *.txt
 *.sql

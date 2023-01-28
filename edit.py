@@ -1,10 +1,10 @@
 import cv2
 
 class Editor:
-    def __init__(self, img, outputFileName, width, threshold1, threshold2):
+    def __init__(self, img, outputFileName, width):
         self.file = open(outputFileName, "w")
         self.img  = img
-        self.canny = cv2.Canny(img, threshold1, threshold2)
+        self.canny = img
         self.imgWidth = len(img[0])
         self.imgHeight = len(img)
         self.aspect = self.imgWidth / self.imgHeight
