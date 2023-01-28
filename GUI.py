@@ -9,20 +9,17 @@ from DrawingApp import DrawingApp
 setting = {
     "navBg": "#717171",
     "bg": "#D9D9D9",
-    "TEXT_WIDTH": 50
-    # you might wanna play with this const
-# TEXT_WIDTH = 100
-# CANNY_CONSTANT = 150
+    "TEXT_WIDTH": 50        # increase this
 }
 
 class GUI:
 
     def __init__(self, editingWindow=0):
         # setting window
-        root = tk.Tk()
-        root.config(background=setting["bg"])
-        root.geometry("760x400")
-        root.minsize(760, 400)
+        self.root = tk.Tk()
+        self.root.config(background=setting["bg"])
+        self.root.geometry("760x400")
+        self.root.minsize(760, 400)
 
         # functions
         self.editingWindow = editingWindow
@@ -37,7 +34,7 @@ class GUI:
         self.initEditorView()
 
 
-        root.mainloop()
+        self.root.mainloop()
 
     # ==================== NAVBAR ============================== #
     def initNavBar(self):
@@ -57,7 +54,6 @@ class GUI:
 
     # ======================= FILE VIEW ========================= #
     def initFileView(self):
-        print(self.editingWindow)
         frame2 = tk.Frame(bg=setting["bg"])
         frame2.pack(side=tk.LEFT)
         
@@ -86,8 +82,8 @@ class GUI:
         self.addButton(frame, "Undo")
         self.addButton(frame, "Redo")
 
-        self.addButton(frame, "cancel")
-        self.addButton(frame, "ok")
+        self.addButton(frame, "cancel", command=self.root.destroy)
+        self.addButton(frame, "ok"    , command=self.root.destroy)
 
     # =========================================================== #
     
@@ -136,16 +132,14 @@ class GUI:
 
             temp = DrawingApp(self.image)
             self.output = temp.draw()
-            # self.editingWindow(self.image)
     
 
     def generateOutput(self):
         if len(self.output)==0: return
 
-        f = filedialog.asksaveasfile(initialfile = 'Untitled.txt', defaultextension=".txt",filetypes=[("All Files","*.*"),("Text Documents","*.txt")])
-        
+        f = filedialog.asksaveasfilename(initialfile = 'Untitled.txt', defaultextension=".txt",filetypes=[("All Files","*.*"),("Text Documents","*.txt")])
         if not f: return
         
         # editing image
-        editor = Editor(self.output, f.name, setting["TEXT_WIDTH"])
+        editor = Editor(self.output, f, setting["TEXT_WIDTH"])
         editor.makeOutput()

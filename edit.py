@@ -1,5 +1,3 @@
-import cv2
-
 class Editor:
     def __init__(self, img, outputFileName, width):
         self.file = open(outputFileName, "w")
