@@ -13,7 +13,7 @@ class DrawingApp:
         self.threshold2 = 0
 
         self.isDrawing  = False
-        self.color = 0
+        self.color = 255
 
         self.windowName = "drawBoard"
         cv2.namedWindow(self.windowName)

@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import cv2
+import numpy as np
 
 from edit import Editor
 from DrawingApp import DrawingApp
@@ -8,7 +9,7 @@ from DrawingApp import DrawingApp
 setting = {
     "navBg": "#717171",
     "bg": "#D9D9D9",
-    "TEXT_WIDTH": 100
+    "TEXT_WIDTH": 50
     # you might wanna play with this const
 # TEXT_WIDTH = 100
 # CANNY_CONSTANT = 150
@@ -114,7 +115,18 @@ class GUI:
 
 
     def drawWindow(self):
-        return
+        master = tk.Tk()
+        master.minsize(200, 100)
+
+        def destroy():
+
+            self.image = np.zeros((master.winfo_height(), master.winfo_width(), 3), np.uint8)
+            master.destroy()
+
+        tk.Label(master, text="resize me, and goto edit").pack()
+        tk.Button(master, text='OK', command=destroy).pack()
+
+        tk.mainloop()
 
 
 
@@ -128,10 +140,12 @@ class GUI:
     
 
     def generateOutput(self):
-        print("here")
         if len(self.output)==0: return
 
-
+        f = filedialog.asksaveasfile(initialfile = 'Untitled.txt', defaultextension=".txt",filetypes=[("All Files","*.*"),("Text Documents","*.txt")])
+        
+        if not f: return
+        
         # editing image
-        editor = Editor(self.output, "outputs\\" + "test" + ".txt", setting["TEXT_WIDTH"])
+        editor = Editor(self.output, f.name, setting["TEXT_WIDTH"])
         editor.makeOutput()
