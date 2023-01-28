@@ -7,7 +7,8 @@ setting = {
 
 class GUI:
 
-    def __init__(self):
+    def __init__(self, editingWindow=0):
+        self.editingWindow = editingWindow
         self.initNavBar()
         self.initFileView()
         self.initEditorView()
@@ -28,13 +29,14 @@ class GUI:
 
 
     def initFileView(self):
+        print(self.editingWindow)
         frame2 = tk.Frame(bg=setting["bg"])
         frame2.pack(side=tk.LEFT)
         
         self.addButton(frame2, "Select File")
         self.addButton(frame2, "Draw")
 
-        self.addButton(frame2, "Edit")
+        self.addButton(frame2, "Edit", command=self.editingWindow)
         self.addButton(frame2, "Draw")
 
         self.addButton(frame2, "Generate")
@@ -59,25 +61,11 @@ class GUI:
         self.addButton(frame, "ok")
 
     
-    def addButton(self, frame, text):
-        button = tk.Button(frame, text=text, height=2, width=16, bg=setting["navBg"], fg=setting["bg"], font=("Arial",11))
+    def addButton(self, frame, text, command=lambda: 0):
+        button = tk.Button(frame, text=text, height=2, width=16, bg=setting["navBg"], fg=setting["bg"], font=("Arial",11), command=command)
         button.pack(padx=10, pady=10)
     
 
     def addCheckButton(self, frame, text, variable, command=lambda:0):
         c1 = tk.Checkbutton(frame, text=text,variable=variable, onvalue=1, offvalue=0, command=command)
         c1.pack()
-
-
-def main():
-
-    root = tk.Tk()
-    root.config(background=setting["bg"])
-    root.geometry("760x400")
-    root.minsize(760, 400)
-    app = GUI()
-    root.mainloop()
-
-
-if __name__ == '__main__':
-    main()
