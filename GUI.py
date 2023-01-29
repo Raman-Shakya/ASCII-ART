@@ -10,7 +10,7 @@ from ShowOutput import showOutput
 setting = {
     "navBg": "#717171",
     "bg": "#D9D9D9",
-    "TEXT_WIDTH": 100        # increase this
+    "TEXT_WIDTH": 75        # Quality
 }
 
 class GUI:
@@ -20,6 +20,7 @@ class GUI:
         self.root = tk.Tk()
         self.root.config(background=setting["bg"])
         self.root.geometry("760x400")
+        self.root.title("ASCII-ART : Raman Shakya")
         self.root.minsize(760, 400)
 
         # some variables
@@ -51,12 +52,21 @@ class GUI:
     def printHelp(self):
         window = tk.Tk()
         window.geometry("300x300")
+        window.title("help")
 
-        tk.Label(window, text="SHORTCUTS:").pack()
+        tk.Label(window, text="1. select a image first by 'Select File' button \nor make a new image by 'Draw' button").pack()
+        tk.Label(window, text="2. an editor window will popup where you can edit\n or draw your image").pack()
+        tk.Label(window, text="3. click on 'Generate' button to generate ASCII art\n and create a new window").pack()
+        tk.Label(window, text="4. you can save or copy the output using the buttons\n\n").pack()
 
-        tk.Label(window, text="z : pen / eraser").pack()
-        tk.Label(window, text="SHORTCUTS:").pack()
-        tk.Label(window, text="enter : done").pack()
+
+
+        tk.Label(window, text="these shortcuts are for editor window").pack()
+
+        tk.Label(window, text="SHORTCUTS:").pack(pady=20)
+
+        tk.Label(window, text="( z )\t:\tpen/eraser").pack()
+        tk.Label(window, text="( enter )\t:\tdone").pack()
 
         window.mainloop()
     # ========================================================+
@@ -109,7 +119,12 @@ class GUI:
 
     # ======================== LEFT BAR BUTTON ON CLICK =========================== #
     def getImage(self):
-        name = filedialog.askopenfilename()
+        name = filedialog.askopenfilename(filetypes=[
+                        ("image", ".jpeg"),
+                        ("image", ".png"),
+                        ("image", ".jpg"),
+                    ]
+                )
         if not name: return
         temp = cv2.imread(name)
 
@@ -126,8 +141,9 @@ class GUI:
 
     def drawWindow(self):
         master = tk.Tk()
-        master.geometry("400x300")
+        master.geometry("500x400")
         master.minsize(200, 100)
+        master.title("Image Size Selector")
 
         def destroy():
 
@@ -136,8 +152,8 @@ class GUI:
 
             self.editingImgWindow()
 
-        tk.Label(master, text="resize me, and goto edit").pack()
-        tk.Button(master, text='OK', command=destroy).pack()
+        tk.Label(master, text="resize me").pack()
+        tk.Button(master, text='OK', width=10, height=5, command=destroy).pack(expand=True)
 
         tk.mainloop()
 
