@@ -54,8 +54,7 @@ class DrawingApp:
             cv2.imshow(self.windowName, self.canny)
             
             key = cv2.waitKey(1)
-            if key==27:
-                print("break key read")
+            if key==13:
                 break
             if key==ord('z'):
                 if self.color ==0 :

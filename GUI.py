@@ -10,7 +10,7 @@ from ShowOutput import showOutput
 setting = {
     "navBg": "#717171",
     "bg": "#D9D9D9",
-    "TEXT_WIDTH": 50        # increase this
+    "TEXT_WIDTH": 100        # increase this
 }
 
 class GUI:
@@ -47,8 +47,19 @@ class GUI:
         helpButton.pack(side=tk.RIGHT, padx=10)
     # ========================================================== #
 
+    # ====================== HELP TAB ========================= #
     def printHelp(self):
-        print("helped")
+        window = tk.Tk()
+        window.geometry("300x300")
+
+        tk.Label(window, text="SHORTCUTS:").pack()
+
+        tk.Label(window, text="z : pen / eraser").pack()
+        tk.Label(window, text="SHORTCUTS:").pack()
+        tk.Label(window, text="enter : done").pack()
+
+        window.mainloop()
+    # ========================================================+
 
 
     # ======================= FILE VIEW ========================= #
@@ -110,7 +121,7 @@ class GUI:
 
         self.editingImgWindow()
 
-    # ===================================================================================== #
+    # ---------------------------------------------------------------------------- #
 
 
     def drawWindow(self):
@@ -130,7 +141,7 @@ class GUI:
 
         tk.mainloop()
 
-    # ===================================================================================== #
+    # ---------------------------------------------------------------------------- #
 
     def editingImgWindow(self):
         if (len(self.image)!=0):
@@ -142,7 +153,7 @@ class GUI:
             temp = DrawingApp(self.image)
             self.output = temp.draw()
     
-    # ===================================================================================== #
+    # ---------------------------------------------------------------------------- #
 
     def generateOutput(self):
         if len(self.output)==0: return

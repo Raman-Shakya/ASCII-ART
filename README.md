@@ -1,4 +1,7 @@
 # ASCII ART
+
+## THIS DOCUMENTATION IS OUTDATED, WILL UPDATE IT ONCE I SETTLE ON A GOOD UI
+
 This project attempts to draw images on *txt* files also known as ASCII art.
 
 ---
