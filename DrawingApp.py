@@ -19,6 +19,8 @@ class DrawingApp:
         cv2.namedWindow(self.windowName)
         cv2.createTrackbar("threshold1", self.windowName, 1, 500, lambda a: 0)
         cv2.createTrackbar("threshold2", self.windowName, 1, 500, lambda a: 0)
+        cv2.createTrackbar("pensize"   , self.windowName, 1,  50, lambda a: 0)
+
     
         cv2.imshow(self.windowName, self.canvas)
         cv2.setMouseCallback(self.windowName, self.mouseActionCallBack)
@@ -26,7 +28,7 @@ class DrawingApp:
 
     def mouseActionCallBack(self, event, current_x, current_y, *b):
         if self.isDrawing:
-            cv2.line(self.canny, (current_x, current_y), (self.previous_x, self.previous_y), color=self.color, thickness=2)
+            cv2.line(self.canny, (current_x, current_y), (self.previous_x, self.previous_y), color=self.color, thickness=cv2.getTrackbarPos("pensize", self.windowName))
 
         if event == cv2.EVENT_LBUTTONDOWN:
             self.isDrawing = True

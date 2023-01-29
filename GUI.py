@@ -15,15 +15,12 @@ setting = {
 
 class GUI:
 
-    def __init__(self, editingWindow=0):
+    def __init__(self):
         # setting window
         self.root = tk.Tk()
         self.root.config(background=setting["bg"])
         self.root.geometry("760x400")
         self.root.minsize(760, 400)
-
-        # functions
-        self.editingWindow = editingWindow
 
         # some variables
         self.image = []
@@ -73,16 +70,16 @@ class GUI:
         frame = tk.Frame(bg=setting["bg"])
         frame.pack(side=tk.RIGHT)
 
-        editorSettingLabel = tk.Label(frame, text="Editor Setting", bg=setting["bg"], fg=setting["navBg"], font=("Arial",17))
-        editorSettingLabel.pack(side=tk.LEFT, padx=50, pady=18)
+        # editorSettingLabel = tk.Label(frame, text="Editor Setting", bg=setting["bg"], fg=setting["navBg"], font=("Arial",17))
+        # editorSettingLabel.pack(side=tk.LEFT, padx=50, pady=18)
 
-        cannyCheck = tk.IntVar()
-        penCheck   = tk.IntVar()
-        self.addCheckButton(frame, "Canny (c)", cannyCheck)
-        self.addCheckButton(frame,  "Pen (p)" ,  penCheck )
+        # cannyCheck = tk.IntVar()
+        # penCheck   = tk.IntVar()
+        # self.addCheckButton(frame, "Canny (c)", cannyCheck)
+        # self.addCheckButton(frame,  "Pen (p)" ,  penCheck )
 
-        self.addButton(frame, "Undo")
-        self.addButton(frame, "Redo")
+        # self.addButton(frame, "Undo")
+        # self.addButton(frame, "Redo")
 
         self.addButton(frame, "cancel", command=self.root.destroy)
         self.addButton(frame, "ok"    , command=self.root.destroy)
@@ -118,6 +115,7 @@ class GUI:
 
     def drawWindow(self):
         master = tk.Tk()
+        master.geometry("400x300")
         master.minsize(200, 100)
 
         def destroy():

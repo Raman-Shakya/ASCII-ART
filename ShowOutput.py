@@ -8,9 +8,9 @@ def showOutput(text):
     frame.pack()
 
     tk.Button(frame, text="saveAs", command=lambda: savefunc(text)).pack()
-    tk.Button(frame, text="copy").pack()
+    # tk.Button(frame, text="copy").pack()
 
-    textArea = tk.Text(master)
+    textArea = tk.Text(master, wrap="char")
     textArea.pack(fill="both", expand=True)
 
     textArea.insert(tk.INSERT, text)
@@ -19,7 +19,6 @@ def showOutput(text):
 
 
 def savefunc(text):
-    print("yes I was called")
     filename = filedialog.asksaveasfilename()
     output = open(filename, "w")
 
