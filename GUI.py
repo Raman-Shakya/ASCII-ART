@@ -5,6 +5,7 @@ import numpy as np
 
 from edit import Editor
 from DrawingApp import DrawingApp
+from ShowOutput import showOutput
 
 setting = {
     "navBg": "#717171",
@@ -27,6 +28,7 @@ class GUI:
         # some variables
         self.image = []
         self.output = []
+
 
         # setup
         self.initNavBar()
@@ -97,6 +99,7 @@ class GUI:
         c1.pack()
 
 
+    # ======================== LEFT BAR BUTTON ON CLICK =========================== #
     def getImage(self):
         name = filedialog.askopenfilename()
         if not name: return
@@ -108,6 +111,9 @@ class GUI:
         aspect = int(len(temp[0]))/int(len(temp))
         self.image = cv2.resize(temp, (width, int(width/aspect)))
 
+        self.editingImgWindow()
+
+    # ===================================================================================== #
 
 
     def drawWindow(self):
@@ -119,27 +125,39 @@ class GUI:
             self.image = np.zeros((master.winfo_height(), master.winfo_width(), 3), np.uint8)
             master.destroy()
 
+            self.editingImgWindow()
+
         tk.Label(master, text="resize me, and goto edit").pack()
         tk.Button(master, text='OK', command=destroy).pack()
 
         tk.mainloop()
 
-
+    # ===================================================================================== #
 
     def editingImgWindow(self):
         if (len(self.image)!=0):
-            self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
+            try:
+                self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
+            except:
+                pass
 
             temp = DrawingApp(self.image)
             self.output = temp.draw()
     
+    # ===================================================================================== #
 
     def generateOutput(self):
         if len(self.output)==0: return
 
-        f = filedialog.asksaveasfilename(initialfile = 'Untitled.txt', defaultextension=".txt",filetypes=[("All Files","*.*"),("Text Documents","*.txt")])
-        if not f: return
+        editor = Editor(self.output, setting["TEXT_WIDTH"])
+        showOutput(editor.makeOutput())
+
+        
+
+        # f = filedialog.asksaveasfilename(initialfile = 'Untitled.txt', defaultextension=".txt",filetypes=[("All Files","*.*"),("Text Documents","*.txt")])
+        # if not f: return
         
         # editing image
-        editor = Editor(self.output, f, setting["TEXT_WIDTH"])
-        editor.makeOutput()
+        # editor.makeOutput()
+
+    # ===================================================================================== #

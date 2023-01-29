@@ -1,6 +1,6 @@
 class Editor:
-    def __init__(self, img, outputFileName, width):
-        self.file = open(outputFileName, "w")
+    def __init__(self, img, width):
+        # self.file = open(outputFileName, "w")
         self.img  = img
         self.canny = img
         self.imgWidth = len(img[0])
@@ -9,6 +9,7 @@ class Editor:
         self.width = width
         self.height = int(width / self.aspect)
 
+
     def makeOutput(self):
         output = [[' ' for i in range(self.width)] for _ in range(self.height)] # text output
 
@@ -16,9 +17,11 @@ class Editor:
             for j in range(self.width):
                 output[i][j] = self.getChar(i, j, int(self.imgWidth/self.width), int(self.imgHeight/self.height))
         
-        for i in output:
-            self.file.write(' '.join(i)+'\n')
-        self.file.close()
+        parsed = '\n'.join(' '.join(output[i][j] for j in range(self.width)) for i in range(self.height))
+        
+        return parsed
+
+
 
     def getChar(self, i, j, w, h):
         scI = i*h # sc = StartCoordinate
