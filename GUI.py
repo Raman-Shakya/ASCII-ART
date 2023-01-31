@@ -35,6 +35,7 @@ class GUI:
 
 
         self.root.mainloop()
+        
 
     # ==================== NAVBAR ============================== #
     def initNavBar(self):
@@ -78,7 +79,12 @@ class GUI:
         frame2.pack(side=tk.LEFT)
         
         self.addButton(frame2, "Select File", command=self.getImage)
+
         self.addButton(frame2, "Draw", command=self.drawWindow)
+
+        # is image selected? label for that
+        self.imageSelectedLabel = tk.Label(frame2, text="image not selected")
+        self.imageSelectedLabel.pack()
 
         self.addButton(frame2, "Edit", command=self.editingImgWindow)
 
@@ -126,6 +132,8 @@ class GUI:
                     ]
                 )
         if not name: return
+
+        self.imageSelectedLabel.config( text="image selected" )
         temp = cv2.imread(name)
 
         
@@ -144,6 +152,8 @@ class GUI:
         master.geometry("500x400")
         master.minsize(200, 100)
         master.title("Image Size Selector")
+
+        self.imageSelectedLabel.config( text="image selected" )
 
         def destroy():
 
