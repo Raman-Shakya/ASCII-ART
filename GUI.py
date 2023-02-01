@@ -108,10 +108,17 @@ class GUI:
         # self.addButton(frame, "Undo")
         # self.addButton(frame, "Redo")
 
-        self.addButton(frame, "cancel", command=self.root.destroy)
+        self.addButton(frame, "cancel", command=self.cancelImage)
         self.addButton(frame, "ok"    , command=self.root.destroy)
 
     # =========================================================== #
+
+    def cancelImage(self):
+        self.image = []
+        self.output = []
+        self.imageSelectedLabel.config(text="Image not selected")
+
+        
     
     def addButton(self, frame, text, command=lambda: 0):
         button = tk.Button(frame, text=text, height=2, width=16, bg=setting["navBg"], fg=setting["bg"], font=("Arial",11), command=command)
