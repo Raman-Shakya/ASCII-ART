@@ -42,7 +42,9 @@ class DrawingApp:
     def draw(self):
 
         self.canny = cv2.Canny(self.canvas, self.threshold1, self.threshold2)
+    
         while True:
+    
             temp1 = cv2.getTrackbarPos("threshold1", self.windowName)
             temp2 = cv2.getTrackbarPos("threshold2", self.windowName)
             
@@ -61,7 +63,13 @@ class DrawingApp:
                     self.color = 255
                 else:
                     self.color = 0
+
+            if cv2.getWindowProperty(self.windowName, cv2.WND_PROP_VISIBLE) < 1:        
+                break
+
         cv2.destroyWindow(self.windowName)
+
+        
 
         return self.canny
     

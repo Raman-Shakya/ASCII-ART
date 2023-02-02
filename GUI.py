@@ -160,17 +160,22 @@ class GUI:
         master.minsize(200, 100)
         master.title("Image Size Selector")
 
-        self.imageSelectedLabel.config( text="image selected" )
 
-        def destroy():
+        def destroy(closeOnCancel=True):
 
             self.image = np.zeros((master.winfo_height(), master.winfo_width(), 3), np.uint8)
             master.destroy()
 
-            self.editingImgWindow()
+            if closeOnCancel:
+                self.imageSelectedLabel.config( text="image selected" )
+                self.editingImgWindow()
+            
 
         tk.Label(master, text="resize me").pack()
         tk.Button(master, text='OK', width=10, height=5, command=destroy).pack(expand=True)
+
+
+        master.protocol("WM_DELETE_WINDOW", lambda: destroy(False))
 
         tk.mainloop()
 
@@ -185,6 +190,7 @@ class GUI:
 
             temp = DrawingApp(self.image)
             self.output = temp.draw()
+        
     
     # ---------------------------------------------------------------------------- #
 
