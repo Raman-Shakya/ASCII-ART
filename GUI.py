@@ -114,9 +114,20 @@ class GUI:
     # =========================================================== #
 
     def cancelImage(self):
-        self.image = []
-        self.output = []
-        self.imageSelectedLabel.config(text="Image not selected")
+        if len(self.image) == 0: return
+
+        # new popup window
+        top = tk.Toplevel(self.root)
+        top.geometry("400x200")
+
+        def reset():
+            self.image = []
+            self.output = []
+            self.imageSelectedLabel.config(text="Image not selected")
+            top.destroy()
+
+        self.addButton(top, "yes", command=reset)
+        self.addButton(top, "no", command=lambda: top.destroy())
 
         
     
