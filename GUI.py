@@ -83,7 +83,7 @@ class GUI:
         self.addButton(frame2, "Draw", command=self.drawWindow)
 
         # is image selected? label for that
-        self.imageSelectedLabel = tk.Label(frame2, text="image not selected")
+        self.imageSelectedLabel = tk.Label(frame2, text="image not selected", bg=setting["bg"])
         self.imageSelectedLabel.pack()
 
         self.addButton(frame2, "Edit", command=self.editingImgWindow)
@@ -97,16 +97,6 @@ class GUI:
         frame = tk.Frame(bg=setting["bg"])
         frame.pack(side=tk.RIGHT)
 
-        # editorSettingLabel = tk.Label(frame, text="Editor Setting", bg=setting["bg"], fg=setting["navBg"], font=("Arial",17))
-        # editorSettingLabel.pack(side=tk.LEFT, padx=50, pady=18)
-
-        # cannyCheck = tk.IntVar()
-        # penCheck   = tk.IntVar()
-        # self.addCheckButton(frame, "Canny (c)", cannyCheck)
-        # self.addCheckButton(frame,  "Pen (p)" ,  penCheck )
-
-        # self.addButton(frame, "Undo")
-        # self.addButton(frame, "Redo")
 
         self.addButton(frame, "cancel", command=self.cancelImage)
         self.addButton(frame, "ok"    , command=self.root.destroy)
