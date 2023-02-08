@@ -1,3 +1,11 @@
+import cv2
+
+characterMap = cv2.imread("characters.png")
+
+# cv2.imshow("window", characterMap)
+# cv2.waitKey(0)
+
+
 class Editor:
     def __init__(self, img, width):
         # self.file = open(outputFileName, "w")
@@ -7,7 +15,7 @@ class Editor:
         self.imgHeight = len(img)
         self.aspect = self.imgWidth / self.imgHeight
         self.width = width
-        self.height = int(width / self.aspect)
+        self.height = int((width / self.aspect) / 2)
 
 
     def makeOutput(self):
@@ -15,37 +23,43 @@ class Editor:
 
         for i in range(self.height):
             for j in range(self.width):
-                output[i][j] = self.getChar(i, j, int(self.imgWidth/self.width), int(self.imgHeight/self.height))
+                output[i][j] = self.getChar(i, j, int(self.imgWidth/self.width), int(self.imgHeight/self.height*2))
         
-        parsed = '\n'.join(' '.join(output[i][j] for j in range(self.width)) for i in range(self.height))
+        parsed = '\n'.join(''.join(output[i][j] for j in range(self.width)) for i in range(self.height))
         
         return parsed
 
 
 
     def getChar(self, i, j, w, h):
+        temp = cv2.resize(characterMap, ((257*w, h)))
+
         scI = i*h # sc = StartCoordinate
         scJ = j*w
-        hw  = int(w/2) # h for half
-        hh  = int(h/2)
-        topLeft    = self.activate(self.getAvg(scI, scJ, scI+hh, scJ+hw))
-        topRight   = self.activate(self.getAvg(scI, scJ+hw, scI+hh, scJ+w))
-        bottomLeft = self.activate(self.getAvg(scI+hh, scJ, scI+h, scJ+hw))
-        bottomRight= self.activate(self.getAvg(scI+hh, scJ+hw, scI+h, scJ+w))
+        # hw  = int(w/2) # h for half
+        # hh  = int(h/2)
 
-        if topLeft and topRight and bottomLeft and bottomRight:
-            return "#"
-        if topLeft and bottomRight:
-            return "\\"
-        if topRight and bottomLeft:
-            return "/"
-        if (topLeft and bottomLeft) or (topRight and bottomRight):
-            return "|"
-        if (topLeft and topRight):
-            return "-"
-        if (bottomLeft and bottomRight):
-            return "_"
-        return " "
+        return self.getBestChar(temp, scI, scJ, w, h)
+
+
+        # topLeft    = self.activate(self.getAvg(scI, scJ, scI+hh, scJ+hw))
+        # topRight   = self.activate(self.getAvg(scI, scJ+hw, scI+hh, scJ+w))
+        # bottomLeft = self.activate(self.getAvg(scI+hh, scJ, scI+h, scJ+hw))
+        # bottomRight= self.activate(self.getAvg(scI+hh, scJ+hw, scI+h, scJ+w))
+
+        # if topLeft and topRight and bottomLeft and bottomRight:
+        #     return "#"
+        # if topLeft and bottomRight:
+        #     return "\\"
+        # if topRight and bottomLeft:
+        #     return "/"
+        # if (topLeft and bottomLeft) or (topRight and bottomRight):
+        #     return "|"
+        # if (topLeft and topRight):
+        #     return "-"
+        # if (bottomLeft and bottomRight):
+        #     return "_"
+        # return " "
 
 
     def getAvg(self, stI, stJ, enI, enJ):
@@ -59,3 +73,29 @@ class Editor:
 
     def activate(self, avg):
         return avg > 0
+
+
+    def getBestChar(self, temp, scI, scJ, w, h):
+        # cv2.imshow("temp",temp)
+        # cv2.waitKey(0)
+
+        def compare(char):
+            count = 0
+            for i in range(h):
+                for j in range(w):
+                    if self.activate(self.canny[scI + i][scJ + j]) == self.activate(temp[i][char*w + j][0]):
+                        count += 1
+            return count
+
+        bestScore = 0
+        bestChar = ' '
+        for i in range(257):
+            try:
+                temp1 = compare(i)
+            except:
+                return ' '
+            if temp1 >= bestScore:
+                bestScore = temp1
+                bestChar = chr(i)
+
+        return bestChar
