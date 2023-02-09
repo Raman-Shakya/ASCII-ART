@@ -10,7 +10,7 @@ from ShowOutput import showOutput
 setting = {
     "navBg": "#717171",
     "bg": "#D9D9D9",
-    "TEXT_WIDTH": 75        # Quality
+    "TEXT_WIDTH": 5        # Quality
 }
 
 class GUI:

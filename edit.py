@@ -2,9 +2,6 @@ import cv2
 
 characterMap = cv2.imread("characters.png")
 
-# cv2.imshow("window", characterMap)
-# cv2.waitKey(0)
-
 
 class Editor:
     def __init__(self, img, width):
@@ -76,8 +73,8 @@ class Editor:
 
 
     def getBestChar(self, temp, scI, scJ, w, h):
-        # cv2.imshow("temp",temp)
-        # cv2.waitKey(0)
+        cv2.imshow("temp",temp[scI:scI+h, scJ:scJ+w])
+        cv2.waitKey(0)
 
         def compare(char):
             count = 0
